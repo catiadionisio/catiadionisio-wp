@@ -1,0 +1,166 @@
+// Forms
+
+::-webkit-input-placeholder {
+  color: $black;
+  opacity: 1;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  color: $black;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: $black;
+  opacity: 1;
+}
+
+input,
+textarea,
+select,
+button {
+  background-color: transparent;
+  border: 1px solid $black;
+  border-radius: 0;
+  color: $black;
+  display: inline-block;
+  margin-bottom: 20px;
+  outline: 0;
+  padding: 8px 20px;
+  width: 100%;
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+select {
+  appearance: none;
+}
+
+.form-select {
+  background-color: transparent;
+  border-radius: 0;
+  color: $black;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+
+  &::after {
+    // Arrow down
+    height: 20px;
+    line-height: 20px;
+    pointer-events: none;
+    position: absolute;
+    right: 10px;
+    top: 11px;
+	}
+}
+
+input[type='submit'],
+button,
+.btn {
+  background: $mainColor;
+  border: 1px solid $mainColor;
+  color: $white;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  width: auto;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    color: $mainColor;
+  }
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+
+}
+
+textarea {
+  height: 150px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+
+// Contact form 7
+
+.wpcf7-checkbox,
+.wpcf7-form-control-wrap {
+  span.wpcf7-list-item {
+    display: block;
+    line-height: 1;
+    margin-bottom: 10px;
+    margin-left: 0;
+
+    label {
+      display: block;
+      margin-bottom: 0;
+      overflow: hidden;
+      position: relative;
+
+      .wpcf7-list-item-label {
+        cursor: pointer;
+        display: inline-block;
+        font-weight: normal;
+        line-height: 16px;
+        margin-bottom: 0;
+        padding-left: 15px;
+        width: calc(100% - 15px);
+      }
+
+      input[type="radio"],
+      input[type="checkbox"] {
+        float: left;
+        height: 16px;
+        line-height: 16px;
+        margin-bottom: 0;
+        margin-left: 0;
+        margin-top: 0;
+        width: 16px;
+      }
+
+      input[type="radio"] {
+        height: 14px;
+        margin: 1px;
+        width: 14px;
+      }
+    }
+  }
+}
+
+span.wpcf7-not-valid-tip {
+}
+
+span.wpcf7-list-item {
+}
+
+.wpcf7 p {
+}
+
+.wpcf7-form-control-wrap.disabled {
+}
+
+div.wpcf7-response-output,
+div.wpcf7-mail-sent-ok,
+div.wpcf7-mail-sent-ng,
+div.wpcf7-aborted,
+div.wpcf7-spam-blocked,
+div.wpcf7-validation-errors,
+div.wpcf7-acceptance-missing {
+}

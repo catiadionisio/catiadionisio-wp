@@ -1,0 +1,100 @@
+// SETTINGS ==================================================
+
+// Directories
+$imagesDir: '../images';
+
+// Colors
+$black:      #000;
+$white:      #fff;
+$lightgray:  #f2f2f2;
+
+$bgColor:    #fff;
+$textColor:  #000;
+$mainColor:  #9ca66e;
+
+$linkColor:  $mainColor;
+
+// Fonts
+$fontFamilyBase: "Helvetica", Arial, sans-serif;
+$sizeBase: 16px;
+$letterSpacing: .5px;
+$lineHight: 1.4;
+
+
+
+// Media queries
+
+// Small tablets and large smartphones (landscape view)
+$screenXS: 600px;
+
+// Small tablets (portrait view)
+$screenSM: 768px;
+
+// Tablets and small desktops
+$screenMD: 992px;
+
+// Large tablets and desktops
+$screenLG: 1400px;
+
+// Large desktops
+$screenXL: 1900px;
+
+// Extra large desktops
+$screenXXL: 2000px;
+
+
+// Extra small devices
+@mixin xs {
+  @media screen and (max-width: #{$screenXS}) {
+    @content;
+  }
+}
+
+// Small devices
+@mixin sm {
+  @media screen and (max-width: #{$screenSM}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin md {
+  @media screen and (max-width: #{$screenMD}) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin lg {
+  @media screen and (max-width: #{$screenLG}) {
+    @content;
+  }
+}
+
+// Large desktops
+@mixin xl {
+  @media screen and (min-width: #{$screenXL}) {
+    @content;
+  }
+}
+
+// Extra large desktops
+@mixin xxl {
+  @media screen and (min-width: #{$screenXXL}) {
+    @content;
+  }
+}
+
+
+// Custom devices
+@mixin minMq($screen) {
+  @media screen and (min-width: $screen+'px') {
+    @content;
+  }
+}
+
+@mixin maxMq($screen) {
+  @media screen and (max-width: $screen+'px') {
+    @content;
+  }
+}

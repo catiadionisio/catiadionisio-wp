@@ -13,9 +13,6 @@ function theme_enqueue_scripts(){
 	wp_enqueue_script('scripts', get_template_directory_uri().'/assets/js/scripts.min.js', array ('jquery'), THEME_VERSION, true);
 	wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/global.min.css', false, THEME_VERSION);
 
-	// Fontawesome
-	wp_enqueue_script('fontawesome', get_template_directory_uri().'/assets/vendor/fontawesome/js/fontawesome-all.min.js');
-
 	// modernizr
 	//wp_enqueue_script('modernizr', get_template_directory_uri().'/assets/vendor/modernizr.js');
 

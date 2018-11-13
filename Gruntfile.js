@@ -5,12 +5,12 @@ module.exports = function(grunt) {
 
 		// Watches for changes and runs tasks
 		watch : {
-			less : {
-				files : ['assets/less/*.less'],
+			sass : { // watch sass files
+				files : ['assets/sass/*.scss'],
 				tasks : ['css_task']
 			},
-			css : {
-				files : ['assets/css/**/*.css'],
+			css : { // livereload with min css update
+				files : ['assets/css/**/*.min.css'],
 				options : {
 					livereload : true
 				}
@@ -22,50 +22,61 @@ module.exports = function(grunt) {
 					livereload : true
 				}
 			},
-			php : {
-				files : ['**/*.php'],
-				options : {
-					livereload : true
-				}
+			svg : {
+				files : ['assets/dev/svg/**/*.svg'],
+				tasks : ['svg_task']
 			}
 		},
 
 		// Clean minified css and js
 		clean: {
 			css: {
-				src: ['assets/css/global.min.css']
+				src: ['assets/css/*.css', 'assets/css/*.map']
 			},
 			js: {
 				src: ['assets/js/scripts.min.js']
 			},
 		},
 
-		// Compile less files into CSS
-		less: {
-		  production: {
-		    options: {
-		      paths: ['assets/less']
-		    },
-		    files: {
-		      'assets/css/global.css': 'assets/less/*.less'
+		// Compile sass files into CSS
+
+		sass: {
+		    dist: {
+		    	options: {
+		    		sourcemap: 'none'
+		    	},
+			    files: {
+			        'assets/css/global.css': 'assets/sass/style.scss'
+			    }
 		    }
-		  }
 		},
 
-		// Apply post-processors to CSS - autoprefixer and minify
+		// Apply post-processors to CSS - pixrem, autoprefixer, css-mqpacker and minify
 		postcss: {
-	    options: {
-	      map: true, // inline sourcemaps
-	      processors: [
-	        require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
-	        require('cssnano')({preset: 'default'}) // minify the result
-	      ]
-	    },
-	    dist: {
-	      src: 'assets/css/global.css',
-				dest: 'assets/css/global.min.css'
-	    }
-	  },
+		    options: {
+		    	map: false, // inline sourcemaps
+		    	processors: [
+		    		require('sort-css-media-queries'),
+		    		require('pixrem')(),
+			        require('autoprefixer')({browsers: [
+						'Android 2.3',
+						'Android >= 4',
+						'Chrome >= 20',
+						'Firefox >= 24',
+						'Explorer >= 8',
+						'iOS >= 6',
+						'Opera >= 12',
+						'Safari >= 6'
+					]}), // add vendor prefixes
+			        require('css-mqpacker')({sort: require('sort-css-media-queries').desktopFirst}), // Pack media queries
+			        require('cssnano')({preset: 'default'}) // minify the result
+		    	]
+		    },
+		    dist: {
+		     	src: 'assets/dist/global.css',
+					dest: 'assets/dist/global.min.css'
+		    }
+		},
 
 		// JsHint your javascript
 		jshint : {
@@ -82,8 +93,16 @@ module.exports = function(grunt) {
 	        '<%= grunt.template.today("yyyy-mm-dd") %> */'
 	    },
 			dist: {
-				src: 'assets/js/scripts.js',
-				dest: 'assets/js/scripts.min.js'
+				files: [
+					{
+						expand: true,
+						cwd: 'assets/js/',
+						src: '*.js',
+						dest: 'assets/js/',
+						ext: '.min.js',
+						extDot: 'first'
+					}
+				]
 			}
 		},
 
@@ -121,51 +140,6 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Image min
-		imagemin : {
-			production : {
-				files : [
-					{
-						expand: true,
-						cwd: 'images',
-						src: '**/*.{png,jpg,jpeg}',
-						dest: 'images'
-					}
-				]
-			}
-		},
-
-		// SVG min
-		svgmin: {
-			production : {
-				files: [
-					{
-						expand: true,
-						cwd: 'images',
-						src: '**/*.svg',
-						dest: 'images'
-					}
-				]
-			}
-		},
-
-		"bower-install-simple": {
-        options: {
-            color: true,
-            directory: "assets/vendor"
-        },
-        "prod": {
-            options: {
-                production: true
-            }
-        },
-        "dev": {
-            options: {
-                production: false
-            }
-        }
-    }
-
 	});
 
 	// Default task
@@ -174,7 +148,7 @@ module.exports = function(grunt) {
 	// CSS task
 	grunt.registerTask( 'css_task', [
 		'clean:css',
-		'less',
+		'sass',
 		'postcss'
 	]);
 
@@ -185,10 +159,15 @@ module.exports = function(grunt) {
 		'uglify'
 	]);
 
+	// SVG task
+	grunt.registerTask( 'svg_task', [
+		'svgmin:dist'
+	]);
+
 	// Build task
 	grunt.registerTask('build', function() {
 		var arr = [];
-		arr.push('css_task', 'js_task', 'imagemin:production', 'svgmin:production', 'bower-install-simple');
+		arr.push('css_task', 'js_task');
 
 		return grunt.task.run(arr);
 	});
@@ -202,16 +181,14 @@ module.exports = function(grunt) {
 	});
 
 	// Load up tasks
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-contrib-less');
-	grunt.loadNpmTasks('grunt-postcss');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-text-replace');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-imagemin');
-	grunt.loadNpmTasks('grunt-svgmin');
-	grunt.loadNpmTasks("grunt-bower-install-simple");
+	grunt.loadNpmTasks( 'grunt-contrib-watch' );
+	grunt.loadNpmTasks( 'grunt-contrib-clean' );
+	grunt.loadNpmTasks( 'grunt-contrib-sass' );
+	grunt.loadNpmTasks( 'grunt-postcss' );
+	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
+	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
+	grunt.loadNpmTasks( 'grunt-svgmin' );
+	grunt.loadNpmTasks( 'grunt-text-replace' );
 
 	// Run bower install
 	grunt.registerTask('bower-install', function() {
