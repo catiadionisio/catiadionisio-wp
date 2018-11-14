@@ -7,7 +7,9 @@
 function theme_enqueue_scripts(){
 
 	// livereload
-	wp_enqueue_script('livereload', 'http://www.citrinosalbufeira.test:35729/livereload.js?snipver=1', null, false, true);
+	if ( WP_DEBUG ) {
+		wp_enqueue_script( 'livereload', untrailingslashit( home_url() ) . ':35729/livereload.js?snipver=1', null, false, true );
+	}
 
 	// main style and scripts
 	wp_enqueue_script('scripts', get_template_directory_uri().'/assets/js/scripts.min.js', array ('jquery'), THEME_VERSION, true);

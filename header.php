@@ -28,12 +28,14 @@
             </a>
     			</div>
           <div class="menu-container clr">
-            <?php wp_nav_menu(array(
-              'theme_location' => 'main-nav',
-              'container'      => 'nav',
-              'container_id'   => 'primary-nav',
-              'walker'         => new Primary_Walker_Nav_Menu()
-            )) ?>
+            <?php if ( has_nav_menu( 'main-nav' ) ) {
+              wp_nav_menu(array(
+                'theme_location' => 'main-nav',
+                'container'      => 'nav',
+                'container_id'   => 'primary-nav',
+                'walker'         => new Primary_Walker_Nav_Menu()
+              ));
+            } ?>
           </div>
         </div>
         <div class="mobile-menu">
@@ -57,12 +59,14 @@
       <div class="mobile-menu-container">
         <div class="mobile-menu-inner">
           <div class="menu-container">
-            <?php wp_nav_menu(array(
-              'theme_location' => 'main-nav',
-              'container'      => 'nav',
-              'container_id'   => 'primary-nav',
-              'walker'         => new Primary_Walker_Nav_Menu()
-            )) ?>
+            <?php if ( has_nav_menu( 'main-nav' ) ) {
+              wp_nav_menu(array(
+                'theme_location' => 'main-nav',
+                'container'      => 'nav',
+                'container_id'   => 'primary-nav-mobile',
+                'walker'         => new Primary_Walker_Nav_Menu()
+              ));
+            } ?>
           </div>
         </div>
       </div>

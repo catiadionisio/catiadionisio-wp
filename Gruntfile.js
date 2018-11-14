@@ -73,8 +73,8 @@ module.exports = function(grunt) {
 		    	]
 		    },
 		    dist: {
-		     	src: 'assets/dist/global.css',
-					dest: 'assets/dist/global.min.css'
+		     	src: 'assets/css/global.css',
+					dest: 'assets/css/global.min.css'
 		    }
 		},
 
