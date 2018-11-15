@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 				}
 			},
 			svg : {
-				files : ['assets/dev/svg/**/*.svg'],
+				files : ['assets/svg/**/*.svg'],
 				tasks : ['svg_task']
 			}
 		},
@@ -104,6 +104,33 @@ module.exports = function(grunt) {
 					}
 				]
 			}
+		},
+
+
+		// SVG min
+		svgmin: {
+			options: {
+        	plugins: [
+            { convertPathData: false }, // breaks paths
+		    		{ mergePaths: false }, // breaks paths
+		    		{ removeUnknownsAndDefaults: false }, // breaks colors
+            { removeViewBox: false },
+            { removeUselessStrokeAndFill: false },
+            { removeAttrs: { attrs: ['id', 'data-name'] } }
+          ]
+        },
+        dist: {
+        	files: [
+            {
+					    expand: true,
+					    cwd: 'assets/svg/',
+					    src: '*.svg',
+					    dest: 'assets/images/',
+					    ext: '.svg',
+					    extDot: 'first'
+						}
+					]
+        }
 		},
 
 		// Replace theme name in files
